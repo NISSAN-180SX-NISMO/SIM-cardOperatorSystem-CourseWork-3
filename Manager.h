@@ -16,7 +16,6 @@ private:
 	static myTree					Clients;
 	static myTable					SIMCards;
 	static myList					Trades;
-	static uint16_t					CountOfAviableSIMCards;
 	static string					UserInput;
 public:						
 	static string					input(const string& title, function<bool(string)> predicat = [](string) { return true; }) {
@@ -62,9 +61,12 @@ public:
 		else Trade->number = number;
 		bool flag = false;
 		do {
+			start:
 			if (flag) cout << "\tДата выдачи не может быть больше окончания!!! Повторите ввод!!!" << endl;
 			Trade->dateON = Manager::input("\tВведите дату выдачи в формате << dd/mm/yyyy >>: ", DateValidator);
+			if (!DateIsReal(Trade->dateON)) { cout << "Невозможная дата!!! Повторите ввод!" << endl; goto start; }
 			Trade->dateOFF = Manager::input("\tВведите дату окончания в формате << dd/mm/yyyy >>: ", DateValidator);
+			if (!DateIsReal(Trade->dateOFF)) { cout << "Невозможная дата!!! Повторите ввод!" << endl; goto start; }
 			flag = true;
 		} while (LeftDateIsBigger(Trade->dateON, Trade->dateOFF));
 		Trade->Trade = THIS_TRADE;
@@ -74,10 +76,7 @@ public:
 		return findTrades_byPassport(Client.passport).size() % 2;
 	}
 public:
-	static uint16_t					getCountOfAviableSIMCards() { return CountOfAviableSIMCards; }
-	static void						COASC_incr() { CountOfAviableSIMCards++; }
-	static void						COASC_decr() { CountOfAviableSIMCards--; }
-	static Entity::client*			getTopClient() { return Clients.getHead(); }
+	static myTree*					getTree() { return &Clients; }
 	static Entity::SIM*				getSIM(const uint16_t index){ 
 		if (!SIMCards[index]) return nullptr;
 		if (SIMCards[index]->removed) return nullptr;
@@ -94,7 +93,6 @@ public:
 
 	static const void				setSIM(Entity::SIM& sim) {
 		SIMCards.set(eraseDash(sim.number), sim);
-		CountOfAviableSIMCards++;
 	}
 	static const void				popSIM(Entity::SIM& sim) {
 		SIMCards.remove(eraseDash(sim.number));
@@ -153,5 +151,4 @@ public:
 myTree Manager::Clients;
 myTable Manager::SIMCards;
 myList Manager::Trades;
-uint16_t Manager::CountOfAviableSIMCards = 0;
 string Manager::UserInput;

@@ -46,8 +46,6 @@ private:
     };
     vector<node*> Table;
     uint16_t Size = 0;
-
-
     void remove_node(node*& current) {  // удал€ет €чейку по указателю
         if (!current) return;                  // создает пустую €чейку
         delete current;                        // с тегом "удалена" 

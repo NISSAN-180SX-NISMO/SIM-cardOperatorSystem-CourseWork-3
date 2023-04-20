@@ -51,12 +51,12 @@ int main() {
 
 	while (true) {
 		cls();
-		cout << "1) Действия с клиентами" << endl;
-		cout << "2) Действия с SIM-картами" << endl;
-		cout << "3) Выдать SIM-карту" << endl;
-		cout << "4) вернуть SIM-карту" << endl;
-		cout << "5) Показать логи" << endl;
-		cout << "0) Выход" << endl;
+		cout << " 1) Действия с клиентами" << endl;
+		cout << " 2) Действия с SIM-картами" << endl;
+		cout << " 3) Выдать SIM-карту" << endl;
+		cout << " 4) Вернуть SIM-карту" << endl;
+		cout << " 5) Показать логи" << endl;
+		cout << " 0) Выход" << endl;
 		switch (Menu::inputUserChoise()) {
 		case 0: return 0;
 		case 1: ClientsMenu(); break;

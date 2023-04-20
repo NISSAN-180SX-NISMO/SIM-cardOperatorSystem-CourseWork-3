@@ -36,7 +36,7 @@ public:
 		cout << "\tКлиент успешно добавлен!" << endl;
 		pause();
 	}
-	static void					popClient(const string& extpass = "") {
+	static bool					popClient(const string& extpass = "") {
 		string passport;
 		if (extpass == "")
 			passport = Manager::input("\tВведите паспорт в формате << 1234-123456 >> : ", PassportValidator);
@@ -44,16 +44,16 @@ public:
 		auto Client = Manager::findClient(passport);
 		if (!Client) {
 			cout << "\tКлиент не найден!!!" << endl;
-			pause(); return;
+			pause(); return false;
 		}
 		if (Manager::isDebtorClient(*Client)) {
 			cout << "\tКлиент не вернул сим карту! Вы не можете его удалить!" << endl;
-			if (extpass == "") { pause(); return; }
+			if (extpass == "") pause(); return false;
 		}
 		else {
 			Manager::popClient(*Client);
 			cout << "\tКлиент успешно удалён" << endl;
-			if (extpass == "") pause();
+			if (extpass == "") pause(); return true;
 		}
 	}
 	static void					printClients() {
@@ -64,8 +64,9 @@ public:
 		system(start.c_str());
 	}
 	static void					clearClients() {
-		while (Manager::size(Manager::FOR::CLIENTS))
-			popClient(Manager::getTopClient()->passport);
+		auto All = Manager::getTree()->getAll();
+		for (auto& value : All) 
+			popClient(value->passport);
 		cout << "\tСписок клиентов очищен!" << endl;
 		pause(); return;
 	}
@@ -217,10 +218,9 @@ public:
 			}
 			else {
 				Manager::findSIM(number)->in_stock = false;
-				Manager::COASC_incr();
 				auto Trade = Manager::CreateTrade(Entity::trade::TRADE::SALE, passport, number);
 				Manager::setTrade(*Trade);
-				cout << "SIM-карта успешно выдана!\nЛоги обновлены!" << endl;
+				cout << "\tSIM-карта успешно выдана!\n\tЛоги обновлены!" << endl;
 				pause(); return;
 			}
 		}
@@ -238,6 +238,7 @@ public:
 			auto RefundTrade = Trade;
 			RefundTrade->Trade = Entity::trade::TRADE::REFUND;
 			Manager::setTrade(*RefundTrade);
+			pause(); return;
 		}
 		
 	}

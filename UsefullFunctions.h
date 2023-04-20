@@ -16,7 +16,7 @@ void draw(int count, char what, std::ostream& fout) {
 }
 
 void pause() {
-	cout << "Нажмите любую кнопку..." << endl;
+	cout << "\tНажмите любую кнопку..." << endl;
 	_getch();
 }
 
@@ -35,7 +35,7 @@ vector<int> DateToVector(string date) {
 	std::string buff = "";
 	for (auto i = date.begin(); i <= date.end(); ++i) {
 		if (i == date.end()) { DATE.push_back(atoi(buff.c_str())); break; }
-		else if (*i == '.' || *i == '/') { DATE.push_back(atoi(buff.c_str())); buff = ""; }
+		else if (*i == '/') { DATE.push_back(atoi(buff.c_str())); buff = ""; }
 		else { buff += *i; }
 	}
 	return DATE;

@@ -14,7 +14,6 @@ public:
 		return std::stod(key.c_str());
 	}
 private:
-
 	struct node {
 		uint64_t key;
 		Entity::client value;
@@ -31,8 +30,10 @@ private:
 	};
 	node* Head = nullptr;
 	uint16_t Size = 0;
-	int8_t height(node* current) { return current ? current->height : 0; } // получает текущую разность высот
-	int8_t bfactor(node* current) { return height(current->right) - height(current->left); } // вычисляет новую разность высот
+	int8_t height(node* current) 
+	{ return current ? current->height : 0; } // получает текущую разность высот
+	int8_t bfactor(node* current) 
+	{ return height(current->right) - height(current->left); } // вычисляет новую разность высот
 	void fixheight(node* current) { // фиксит разность высот после вращений
 		uint8_t hLeft = height(current->left);
 		uint8_t hRight = height(current->right);
@@ -130,6 +131,12 @@ private:
 		if (current->left) print(fout, current->left);
 		if (current->right) print(fout, current->right);
 	}
+	void getAll(vector<Entity::client*> &all, node* current) {
+		if (!current) return;
+		if (current) all.push_back(&current->value);
+		if (current->left) getAll(all, current->left);
+		if (current->right) getAll(all, current->right);
+	}
 public:
 	void show_head(std::ostream& fout) {
 		fout << " "; draw(222, '-', fout); fout << std::endl;
@@ -162,6 +169,11 @@ public:
 			remove(Head->key, Head);
 		}
 	}
+	vector<Entity::client*> getAll() {
+		vector<Entity::client*> All;
+		getAll(All, Head);
+		return All;
+	}
 	Entity::client* find(const string& key) {
 		return find(key, Head);
 	}
@@ -171,5 +183,5 @@ public:
 		return buff;
 	}
 	void print(std::ostream& fout) { show_head(fout); print(fout, Head); }
-	uint16_t size() { return this->Size; }
+	uint16_t& size() { return this->Size; }
 };
