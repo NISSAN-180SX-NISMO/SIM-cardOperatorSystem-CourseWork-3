@@ -19,6 +19,7 @@ void ClientsMenu() {
 	case 5: Menu::createClients(); break;
 	case 6: Menu::findClient(); break;
 	case 7: Menu::findClients(); break;
+	default: Menu::missCase(); break;
 	}
 }
 
@@ -40,6 +41,7 @@ void SIMMenu(){
 	case 5: Menu::createSIMS(); break;
 	case 6: Menu::findSIM(); break;
 	case 7: Menu::findSIMS(); break;
+	default: Menu::missCase(); break;
 	}
 }
 

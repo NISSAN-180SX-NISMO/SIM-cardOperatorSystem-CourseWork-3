@@ -33,7 +33,7 @@ bool DateValidator(string date) {
 }
 
 bool DateIsReal(string date) {
-	enum  MONTHS { JANUARY = 1, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER };
+	enum MONTHS { JANUARY = 1, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER };
 	constexpr auto DAY = 0; constexpr auto MONTH = 1; constexpr auto YEAR = 2;
 	int DAYS[]{ -1,31,29,31,30,31,30,31,31,30,31,30,31 };
 	vector<int> DATE = DateToVector(date);

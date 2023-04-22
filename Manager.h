@@ -84,6 +84,7 @@ public:
 				if (Trades[i]->passport == Trades[j]->passport && Trades[i]->number == Trades[j]->number)
 					isDebtor = false;
 			}
+			if (isDebtor) return true;
 		}
 		return isDebtor;
 	}

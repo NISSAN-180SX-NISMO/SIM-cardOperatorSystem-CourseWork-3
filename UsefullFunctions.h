@@ -74,7 +74,6 @@ bool FindSubString(std::string String, std::string SubString) {
 	return false;
 }
 
-
 Entity::trade* FindUnique(vector<Entity::trade*> buff) {
 	if (!buff.size()) return nullptr;
 	if (buff.size() == 1) return buff[0];
