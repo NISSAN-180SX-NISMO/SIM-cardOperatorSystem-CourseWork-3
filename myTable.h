@@ -138,6 +138,7 @@ public:
     }
     vector<Entity::SIM*> findAll(const string& value) {
         vector<Entity::SIM*> buff;
+        
         for (auto& Node : Table) {
             if (Node && Node->value.tariff == value)
                 buff.push_back(&Node->value);

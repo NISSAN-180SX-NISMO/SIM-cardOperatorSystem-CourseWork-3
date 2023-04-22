@@ -73,7 +73,19 @@ public:
 		return Trade;
 	}
 	static bool						isDebtorClient(Entity::client &Client) {
-		return findTrades_byPassport(Client.passport).size() % 2;
+		bool isDebtor = false;
+		auto Trades = findTrades_byPassport(Client.passport);
+		for (size_t i = 0; i < Trades.size(); i++)
+		{
+			isDebtor = true;
+			for (size_t j = 0; j < Trades.size(); j++)
+			{
+				if (i == j) continue;
+				if (Trades[i]->passport == Trades[j]->passport && Trades[i]->number == Trades[j]->number)
+					isDebtor = false;
+			}
+		}
+		return isDebtor;
 	}
 public:
 	static myTree*					getTree() { return &Clients; }
